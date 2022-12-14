@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id "io.qameta.allure" version "2.10.0"
+}
+
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+def allureVersion = "2.14.0",
+    selenideVersion = "5.24.4",
+    testngVersion = "6.14.3",
+    aspectjVersion = "1.9.6",
+    fakerVersion = "1.0.2"
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    version = "2.14.0"
+
+    useTestNG() {
+        version = "2.14.0"
+    }
+}
+
+configurations {
+    testCompile
+}
+
+dependencies {
+    implementation(
+            "org.testng:testng:$testngVersion",
+            "com.codeborne:selenide:$selenideVersion",
+            "org.aspectj:aspectjweaver:$aspectjVersion",
+            "io.qameta.allure:allure-java-commons:$allureVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "io.qameta.allure:allure-testng:$allureVersion",
+            "com.github.javafaker:javafaker:$fakerVersion",
+            "io.rest-assured:rest-assured:4.5.1",
+            'mysql:mysql-connector-java:8.0.29',
+            'com.jcraft:jsch:0.1.55',
+            'com.google.code.gson:gson:2.8.5')
+}
+
+
+test {
+    useTestNG() {
+    }
+}
